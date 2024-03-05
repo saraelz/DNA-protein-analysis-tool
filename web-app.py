@@ -40,15 +40,17 @@ sequence_input = "TACGAACACGTGGAGGCAAACAGGAAGGTGAAGAAGAACTTATCCTATCAGGACGGAAGGTC
 user_input = st.text_area("Please input DNA sequence from 3' to 5'", sequence_input, height=250)
 
 
-def check_DNA_validity(input):
+def check_DNA_validity(user_input):
+  clean_input = []
   for char in input.upper():
-    if char not in ['A', 'T', 'G', 'C'] and char.isalpha():
+    if char in ['A', 'T', 'G', 'C']:
+      clean_input.append(char)
+    elif char.isalpha():
+      # Check DNA
       st.warning('Warning: Input DNA should only include the letters A, T, G, and C.')
+  return ''.join(clean_input)    
 
-check_DNA_validity(user_input)
-
-sequence = ''.join([ch.upper() for ch in user_input if ch.isalpha() and ch.upper() in ['A', 'T', 'G', 'C']])
-
+sequence = check_DNA_validity(user_input)
 
 st.write("""
 ***
