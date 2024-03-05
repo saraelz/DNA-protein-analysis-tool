@@ -40,14 +40,16 @@ sequence_input = "TACGAACACGTGGAGGCAAACAGGAAGGTGAAGAAGAACTTATCCTATCAGGACGGAAGGTC
 user_input = st.text_area("Please input DNA sequence from 3' to 5'", sequence_input, height=250)
 
 
-def check_DNA_validity(user_input):
+def check_DNA_validity(input):
   clean_input = []
-  for char in input.upper():
-    if char in ['A', 'T', 'G', 'C']:
-      clean_input.append(char)
-    elif char.isalpha():
-      # Check DNA
-      st.warning('Warning: Input DNA should only include the letters A, T, G, and C.')
+  for char in input:
+    if char.isalpha():
+      char = char.upper()
+      if char in ['A', 'T', 'G', 'C']:
+        clean_input.append(char)
+      else:
+        # Check DNA
+        st.warning('Warning: Input DNA should only include the letters A, T, G, and C.')
   return ''.join(clean_input)    
 
 sequence = check_DNA_validity(user_input)
@@ -214,11 +216,11 @@ amino_acids = translation(mRNA_sequence,start_index)
 st.code(amino_acids)
 
 # Get single letter amino acids
-amino_acids_sl = [singleletter[aa] for aa in amino_acids]
+amino_acids_sl = [singleletter[aa] for aa in amino_acids if singleletter.get(aa)]
 amino_acids_sl_str = ''.join(amino_acids_sl)
 'Single Letter Amino Acids'
 st.code(amino_acids_sl_str)
       
 
 
-'This program was written by Sara Elzeiny. To request a new feature, please email sara.elzeiny@gmail.com'
+'This program was written by Sara Elzeiny.'
