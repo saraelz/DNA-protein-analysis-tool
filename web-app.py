@@ -216,10 +216,7 @@ st.code(amino_acids)
 amino_acids_sl = [singleletter[aa] for aa in amino_acids if singleletter.get(aa)]
 amino_acids_sl_str = ''.join(amino_acids_sl)
 'Single Letter Amino Acids'
-st.code(amino_acids_sl_str)
-
-f'We have trimmed {start_index} ribonucleotides from the mRNA sequence.'
-      
+st.code(amino_acids_sl_str)      
 
 
 'Credits'
