@@ -39,6 +39,7 @@ sequence_input = "TACGAACACGTGGAGGCAAACAGGAAGGTGAAGAAGAACTTATCCTATCAGGACGGAAGGTC
 #sequence = st.sidebar.text_area("Sequence input", sequence_input, height=250)
 user_input = st.text_area("Please input DNA sequence from 3' to 5'", sequence_input, height=250)
 
+
 def check_DNA_validity(input):
   for char in input.upper():
     if char not in ['A', 'T', 'G', 'C'] and char.isalpha():
@@ -46,7 +47,8 @@ def check_DNA_validity(input):
 
 check_DNA_validity(user_input)
 
-sequence = ''.join([ch.upper() for ch in user_input if ch.isalpha() and ch in ['A', 'T', 'G', 'C']])
+sequence = ''.join([ch.upper() for ch in user_input if ch.isalpha() and ch.upper() in ['A', 'T', 'G', 'C']])
+
 
 st.write("""
 ***
@@ -165,7 +167,7 @@ singleletter = {'Cys': 'C', 'Asp': 'D', 'Ser': 'S', 'Gln': 'Q', 'Lys': 'K',
 'Gly': 'G', 'Ile': 'I', 'Leu': 'L', 'His': 'H', 'Arg': 'R', 'Met': 'M',
 'Val': 'V', 'Glu': 'E', 'Tyr': 'Y', 'STOP': '*'}
 
-def first_start_codon(str, start_codon=['AUG']):
+def find_str_in_Str(str, start_codon):
   """ 
     Find the index of the first occurrence in a String,
 
@@ -174,12 +176,18 @@ def first_start_codon(str, start_codon=['AUG']):
     
     Usage: Translation will begin at the index of the first start codon in the mRNA
   """
-  N = len(str)
-  for s in start_codon:
+  slow = 0
+  while slow < len(str):
+    fast = slow
+    for i in range(3):
+      fast = slow + i
+      if start_codon[i] != str[fast]:
+        break
+      if i==2 and start_codon[i] == str[fast]:
+        return slow
+    slow = slow + 1
+  return -1
     
-
-
-
 
 def translation(mRNA, start_index):
   # Assume mRNA is a string with only characters A U C G
@@ -197,11 +205,17 @@ def translation(mRNA, start_index):
   return amino_acids
 
 
-amino_acids = translation(mRNA_sequence,0)
+start_index = find_str_in_Str(mRNA_sequence, 'AUG')
+amino_acids = translation(mRNA_sequence,start_index)
 
 'Amino Acids'
 st.code(amino_acids)
 
+# Get single letter amino acids
+amino_acids_sl = [singleletter[aa] for aa in amino_acids]
+amino_acids_sl_str = ''.join(amino_acids_sl)
+'Single Letter Amino Acids'
+st.code(amino_acids_sl_str)
       
 
 
