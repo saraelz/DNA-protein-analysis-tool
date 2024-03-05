@@ -111,7 +111,7 @@ st.write(p)
 ### 5. Transcription and Translation
 st.subheader('5. DNA to mRNA to Protein')
 
-st.write('The input DNA query is used as a template for transcription. Then, mRNA is used to encode proteins. Keep in mind that adenine binds to uracil in RNA. Stop codons do not code for any amino acids, and they are represented by the \'*\' ')
+st.write('The input DNA query is used as a template for transcription. Then, mRNA is used to encode proteins. Keep in mind that adenine binds to uracil in RNA.')
 'Input DNA' 
 st.code('3\'' + sequence + '5\' ')
 
@@ -216,8 +216,10 @@ st.code(amino_acids)
 amino_acids_sl = [singleletter[aa] for aa in amino_acids if singleletter.get(aa)]
 amino_acids_sl_str = ''.join(amino_acids_sl)
 'Single Letter Amino Acids'
-st.code(amino_acids_sl_str)      
+st.code(amino_acids_sl_str)
 
+
+'Stop codons do not code for any amino acids, and they are represented by the \'*\'. For the purposes of this learning module, the stop codons have been ignored.'
 
 'Credits'
 'This program was written by Sara Elzeiny. This program is intended for learning purposes only. It is not intended for professional use.'
